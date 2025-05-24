@@ -29,9 +29,11 @@ public class ProdutosDAO {
         try{
             conn = new conectaDAO().connectDB();
             st = conn.createStatement();
-            
+            String update = "insert into produtos (nome,valor,status) values ('"+produto.getNome()+"','"+produto.getValor()+"','"+produto.getStatus()+"');";
+            st.executeUpdate(update);
+            System.out.println("Produto "+produto.getNome()+" cadastrado.");
         }catch(Exception e){
-            System.out.println("Erro ao cadastrar produto.");
+            System.out.println("Erro ao cadastrar produto: "+e.getMessage());
         }
     }
     
