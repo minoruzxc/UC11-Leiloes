@@ -32,7 +32,9 @@ public class ProdutosDAO {
             String update = "insert into produtos (nome,valor,status) values ('"+produto.getNome()+"','"+produto.getValor()+"','"+produto.getStatus()+"');";
             st.executeUpdate(update);
             System.out.println("Produto "+produto.getNome()+" cadastrado.");
+            JOptionPane.showMessageDialog(null, "Cadastro do produto: "+produto.getNome()+" realizado com sucesso!");
         }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar! Confira os dados digitados.");
             System.out.println("Erro ao cadastrar produto: "+e.getMessage());
         }
     }
