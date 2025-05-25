@@ -39,11 +39,42 @@ public class ProdutosDAO {
         }
     }
     
+    public void venderProduto (String id){
+        try{
+            conn = new conectaDAO().connectDB();
+            st = conn.createStatement();
+            String update = "update produtos set status = 'Vendido' where id = "+id;
+            st.executeUpdate(update);
+            JOptionPane.showMessageDialog(null,"Produto com id "+id+" removido do banco!");
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Erro ao vender! selecione um id válido!");
+            System.out.println("Erro ao venderProduto(): "+e.getMessage());
+        }
+    }
+    
     public ArrayList<ProdutosDTO> listarProdutos(){
         try{
             conn = new conectaDAO().connectDB();
             st = conn.createStatement();
             rs = st.executeQuery("select * from produtos");
+            while(rs.next()){
+                    ProdutosDTO p = new ProdutosDTO();
+                    p.setNome(rs.getString("nome"));
+                    p.setValor(rs.getInt("valor"));
+                    p.setStatus(rs.getString("status"));
+                    p.setId(rs.getInt("id"));
+                    listagem.add(p);
+                    System.out.println("added "+ rs.getString("nome"));
+            }
+        }catch(SQLException e){System.out.println("SQL exception occured: "+e.getMessage());};
+        return listagem;
+    }
+    
+    public ArrayList<ProdutosDTO> listarProdutosVendidos(){
+        try{
+            conn = new conectaDAO().connectDB();
+            st = conn.createStatement();
+            rs = st.executeQuery("select * from produtos where status = 'Vendido'");
             while(rs.next()){
                     ProdutosDTO p = new ProdutosDTO();
                     p.setNome(rs.getString("nome"));
